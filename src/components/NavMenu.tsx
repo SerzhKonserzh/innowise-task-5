@@ -22,7 +22,7 @@ export function NavMenu() {
 		<>
 			<nav className="hidden md:flex items-center gap-6">
 				{navItems.map(item => (
-					<NavMenuItem key={item.name} href={item.href} name={item.name} />
+					<NavMenuItem key={item.name} href={item.href} name={item.name} isActive={pathname === item.href ? true : false}/>
 				))}
 			</nav>
 
@@ -42,7 +42,7 @@ export function NavMenu() {
 					</SheetHeader>
 					<nav className="flex flex-col gap-4">
 						{navItems.map(item => (
-							<NavMenuItem key={item.name} href={item.href} name={item.name} />
+							<NavMenuItem key={item.name} href={item.href} name={item.name} isActive={pathname === item.href ? true : false}/>
 						))}
 					</nav>
 				</SheetContent>
