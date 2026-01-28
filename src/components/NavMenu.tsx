@@ -30,7 +30,7 @@ export function NavMenu() {
 				<SheetTrigger asChild className="md:hidden">
 					<Button variant="ghost" size="icon">
 						<Menu className="h-5 w-5" />
-						<span className="sr-only">Меню</span>
+						<span className="sr-only">Menu</span>
 					</Button>
 				</SheetTrigger>
 				<SheetContent side="left">
@@ -40,7 +40,7 @@ export function NavMenu() {
 							Nav Menu
 						</SheetDescription>
 					</SheetHeader>
-					<nav className="flex flex-col gap-4">
+					<nav className="flex flex-col gap-4 p-4 items-start">
 						{navItems.map(item => (
 							<NavMenuItem key={item.name} href={item.href} name={item.name} isActive={pathname === item.href ? true : false}/>
 						))}

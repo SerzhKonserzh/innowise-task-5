@@ -9,7 +9,7 @@ interface Props {
 export function NavMenuItem({href, name, isActive}: Props) {
   return <Link
 						href={href}
-						className={"text-sm font-medium transition-colors hover:text-primary" + (isActive ? " text-destructive" : "")}
+						className={"center text-sm font-medium transition-colors hover:text-hover" + (isActive ? " text-active" : "")}
 					>
 						{name}
 					</Link>
