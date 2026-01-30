@@ -8,10 +8,11 @@ import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { NavMenuItem } from './NavMenuItem';
+import { CartIcon } from '@/components/ui/cart';
 
 const navItems = [
-	{ name: 'Main', href: PAGES.HOME },
-	{ name: 'About', href: PAGES.ABOUT }
+	{ name: 'Main', href: PAGES.HOME, icon: <CartIcon className='flex justify-center'/> },
+	{ name: 'About', href: PAGES.ABOUT, icon: <CartIcon className='flex justify-center'/> }
 ];
 
 export function NavMenu() {
@@ -22,7 +23,7 @@ export function NavMenu() {
 		<>
 			<nav className="hidden md:flex items-center gap-6">
 				{navItems.map(item => (
-					<NavMenuItem key={item.name} href={item.href} name={item.name} isActive={pathname === item.href ? true : false}/>
+					<NavMenuItem key={item.name} href={item.href} icon={item.icon} name={item.name} isActive={pathname === item.href ? true : false}/>
 				))}
 			</nav>
 
@@ -42,7 +43,7 @@ export function NavMenu() {
 					</SheetHeader>
 					<nav className="flex flex-col gap-4 p-4 items-start">
 						{navItems.map(item => (
-							<NavMenuItem key={item.name} href={item.href} name={item.name} isActive={pathname === item.href ? true : false}/>
+							<NavMenuItem key={item.name} href={item.href} icon={item.icon} name={item.name} isActive={pathname === item.href ? true : false}/>
 						))}
 					</nav>
 				</SheetContent>
