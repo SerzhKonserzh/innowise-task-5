@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import type { IRecipe, IRecipesState } from '../shared/types/recipe.interface';
-import { fetchRecipesService } from '../services/recipes.service';
+import { fetchRecipesService, fetchRecipeByIdService } from '../services/recipes.service';
 
 export const useRecipesStore = create<IRecipesState>((set) => ({
   recipes: [],
@@ -13,6 +13,14 @@ export const useRecipesStore = create<IRecipesState>((set) => ({
       set({ recipes, loading: false });
     } catch (error) {
       set({ error: (error as Error).message, loading: false });
+    }
+  },
+  fetchRecipeById: async (id: number) => {
+    try {
+      const recipe = await fetchRecipeByIdService(id);
+      return recipe;
+    } catch (error) {
+      throw new Error((error as Error).message);
     }
   }
 }));

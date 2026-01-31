@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 import { NavMenu } from './NavMenu';
 import { CookingPotIcon } from '@/components/ui/cooking-pot';
 import {
@@ -9,10 +8,8 @@ import {
 	InputGroupAddon,
 	InputGroupInput
 } from '@/components/ui/input-group';
-import { Search, User } from 'lucide-react';
+import { Search } from 'lucide-react';
 import { PAGES } from '../config/pages.config';
-import { NavMenuItem } from './NavMenuItem';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { UserIcon } from '@/components/ui/user';
 
 export function Header() {

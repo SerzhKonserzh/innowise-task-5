@@ -18,4 +18,5 @@ export interface IRecipesState {
   loading: boolean;
   error: string | null;
   fetchRecipes: () => Promise<void>;
+  fetchRecipeById: (id: number) => Promise<IRecipe>;
 }
