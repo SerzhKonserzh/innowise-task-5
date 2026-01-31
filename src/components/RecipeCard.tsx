@@ -12,16 +12,16 @@ interface RecipeCardProps {
 
 export function RecipeCard({ recipe }: RecipeCardProps) {
   return (
-    <Card className="hover:shadow-lg transition-shadow pt-0 w-4/5 sm:w-full">
+    <Card className="hover:shadow-lg transition-shadow pt-0 w-4/5 sm:w-full min-h-[400px] flex flex-col">
       <CardHeader className="p-0">
-        <img 
-          src={recipe.image} 
-          alt={recipe.name} 
+        <img
+          src={recipe.image}
+          alt={recipe.name}
           className="w-full h-48 object-cover rounded-t-lg"
         />
       </CardHeader>
       
-      <CardContent className="p-4">
+      <CardContent className="p-4 grow flex flex-col">
         <CardTitle className="text-lg mb-2">{recipe.name}</CardTitle>
         
         <div className="flex flex-wrap gap-2 mb-3">
@@ -32,7 +32,7 @@ export function RecipeCard({ recipe }: RecipeCardProps) {
           ))}
         </div>
         
-        <div className="space-y-2 text-sm text-muted-foreground">
+        <div className="space-y-2 text-sm text-muted-foreground mt-auto">
           <div className="flex items-center gap-2">
             <Clock className="w-4 h-4" />
             <span>
