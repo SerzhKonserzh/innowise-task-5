@@ -21,7 +21,7 @@ import { Separator } from '@/components/ui/separator';
 
 export default function RecipeDetailPage() {
 	const params = useParams<{ id: string }>();
-	const { recipes } = useRecipesStore();
+	const { recipes, fetchRecipeById } = useRecipesStore();
 	const [recipe, setRecipe] = useState<IRecipe | null>(null);
 	const [loading, setLoading] = useState(true);
 
@@ -38,8 +38,8 @@ export default function RecipeDetailPage() {
 				if (storedRecipe) {
 					setRecipe(storedRecipe);
 				} else {
-					notFound();
-					return;
+					const fetchedRecipe = await fetchRecipeById(id);
+					setRecipe(fetchedRecipe);
 				}
 			} catch (error) {
 				notFound();
@@ -49,7 +49,7 @@ export default function RecipeDetailPage() {
 		};
 
 		fetchRecipe();
-	}, [params.id, recipes]);
+	}, [params.id, recipes, fetchRecipeById]);
 
 	if (loading) {
 		return <div className="container mx-auto p-4">Loading...</div>;
