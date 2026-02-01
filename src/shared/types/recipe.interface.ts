@@ -11,6 +11,8 @@ export interface IRecipe {
   caloriesPerServing: number;
   tags: string[];
   image: string;
+  rating: number;
+  reviewCount: number;
 }
 
 export interface IRecipesState {

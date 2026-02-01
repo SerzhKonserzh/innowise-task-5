@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { useRecipesStore } from '@/src/store/recipes.store';
-import { Input } from '@/components/ui/input';
 import { Card } from '@/components/ui/card';
 import { Search } from 'lucide-react';
 import { useDebounce } from '../hooks/useDebounce';
@@ -22,10 +21,8 @@ export function SearchDropdown() {
 	const { recipes } = useRecipesStore();
 	const dropdownRef = useRef<HTMLDivElement>(null);
 
-	// Реализация debounce
 	const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-	// Функция для поиска рецептов
 	const searchRecipes = useCallback(
 		(term: string) => {
 			if (term.trim() === '') {
@@ -42,24 +39,21 @@ export function SearchDropdown() {
 					name: recipe.name,
 					image: recipe.image
 				}))
-				.slice(0, 5); // Ограничиваем до 5 результатов
+				.slice(0, 5);
 
 			setSearchResults(filtered);
 		},
 		[recipes]
 	);
 
-	// Эффект для выполнения поиска с debounce
 	useEffect(() => {
 		searchRecipes(debouncedSearchTerm);
 	}, [debouncedSearchTerm, searchRecipes]);
 
-	// Эффект для управления открытием/закрытием dropdown
 	useEffect(() => {
 		setIsOpen(searchTerm.length > 0 && searchResults.length > 0);
 	}, [searchTerm, searchResults]);
 
-	// Закрытие dropdown при клике вне его области
 	useEffect(() => {
 		const handleClickOutside = (event: MouseEvent) => {
 			if (

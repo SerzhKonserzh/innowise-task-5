@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { notFound, useParams } from 'next/navigation';
-import { Card, CardContent} from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
 	Clock,
@@ -87,6 +87,11 @@ export default function RecipeDetailPage() {
 					</div>
 
 					<h1 className="text-4xl font-bold mb-4">{recipe.name}</h1>
+
+					<div className="flex items-center gap-2 mb-4">
+						<Star className="h-5 w-5 fill-yellow-500 text-yellow-500" />
+						<span className="text-muted-foreground">{recipe.rating} ({recipe.reviewCount} reviews)</span>
+					</div>
 
 					<div className="flex items-center gap-6 text-muted-foreground">
 						<div className="flex items-center gap-2">
