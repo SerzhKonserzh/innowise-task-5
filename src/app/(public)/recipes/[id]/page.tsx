@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { notFound, useParams } from 'next/navigation';
+import { notFound, useParams, useRouter } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -20,6 +20,7 @@ import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 
 export default function RecipeDetailPage() {
+	const router = useRouter();
 	const params = useParams<{ id: string }>();
 	const { recipes, fetchRecipeById } = useRecipesStore();
 	const [recipe, setRecipe] = useState<IRecipe | null>(null);
@@ -74,6 +75,7 @@ export default function RecipeDetailPage() {
 						variant="ghost"
 						size="icon"
 						className="mb-4 hover:bg-secondary/50"
+						onClick={() => router.back()}
 					>
 						<ChevronLeft className="h-6 w-6" />
 					</Button>
