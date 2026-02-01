@@ -18,37 +18,38 @@ export function SearchDropdown() {
 	const [searchTerm, setSearchTerm] = useState('');
 	const [isOpen, setIsOpen] = useState(false);
 	const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-	const { recipes } = useRecipesStore();
+	const { searchRecipes } = useRecipesStore();
 	const dropdownRef = useRef<HTMLDivElement>(null);
 
 	const debouncedSearchTerm = useDebounce(searchTerm, 300);
 
-	const searchRecipes = useCallback(
-		(term: string) => {
+	const searchRecipesAPI = useCallback(
+		async (term: string) => {
 			if (term.trim() === '') {
 				setSearchResults([]);
 				return;
 			}
 
-			const filtered = recipes
-				.filter(recipe =>
-					recipe.name.toLowerCase().includes(term.toLowerCase())
-				)
-				.map(recipe => ({
+			try {
+				const results = await searchRecipes(term);
+				const formattedResults = results.map(recipe => ({
 					id: recipe.id,
 					name: recipe.name,
 					image: recipe.image
-				}))
-				.slice(0, 5);
-
-			setSearchResults(filtered);
+				})).slice(0, 5);
+				
+				setSearchResults(formattedResults);
+			} catch (error) {
+				console.error('Search error:', error);
+				setSearchResults([]);
+			}
 		},
-		[recipes]
+		[searchRecipes]
 	);
 
 	useEffect(() => {
-		searchRecipes(debouncedSearchTerm);
-	}, [debouncedSearchTerm, searchRecipes]);
+		searchRecipesAPI(debouncedSearchTerm);
+	}, [debouncedSearchTerm, searchRecipesAPI]);
 
 	useEffect(() => {
 		setIsOpen(searchTerm.length > 0 && searchResults.length > 0);

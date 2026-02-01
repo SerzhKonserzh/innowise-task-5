@@ -8,11 +8,11 @@ export interface IRecipesResponse {
   limit: number;
 }
 
-export const fetchRecipesService = async (): Promise<IRecipe[]> => {
+export const fetchRecipesService = async (limit: number = 12, skip: number = 0): Promise<IRecipesResponse> => {
   try {
-    const response = await fetch(`${API_URL}/recipes`);
+    const response = await fetch(`${API_URL}/recipes?limit=${limit}&skip=${skip}`);
     const data: IRecipesResponse = await response.json();
-    return data.recipes;
+    return data;
   } catch (error) {
     throw new Error(`Failed to fetch recipes: ${(error as Error).message}`);
   }
@@ -28,5 +28,15 @@ export const fetchRecipeByIdService = async (id: number): Promise<IRecipe> => {
     return data;
   } catch (error) {
     throw new Error(`Failed to fetch recipe: ${(error as Error).message}`);
+  }
+};
+
+export const searchRecipesService = async (query: string): Promise<IRecipe[]> => {
+  try {
+    const response = await fetch(`${API_URL}/recipes/search?q=${encodeURIComponent(query)}`);
+    const data: IRecipesResponse = await response.json();
+    return data.recipes;
+  } catch (error) {
+    throw new Error(`Failed to search recipes: ${(error as Error).message}`);
   }
 };

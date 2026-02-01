@@ -19,6 +19,8 @@ export interface IRecipesState {
   recipes: IRecipe[];
   loading: boolean;
   error: string | null;
-  fetchRecipes: () => Promise<void>;
+  hasMore: boolean;
+  fetchRecipes: (limit?: number, skip?: number) => Promise<void>;
   fetchRecipeById: (id: number) => Promise<IRecipe>;
+  searchRecipes: (query: string) => Promise<IRecipe[]>;
 }
