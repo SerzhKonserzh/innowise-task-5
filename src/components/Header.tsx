@@ -11,6 +11,7 @@ import {
 import { Search } from 'lucide-react';
 import { PAGES } from '../config/pages.config';
 import { UserIcon } from '@/components/ui/user';
+import { SearchDropdown } from './SearchDropdown';
 
 export function Header() {
 	return (
@@ -40,12 +41,7 @@ export function Header() {
 					</div>
 				</div>
 				<div className="w-full flex items-center justify-center">
-					<InputGroup className="w-full md:max-w-lg">
-						<InputGroupInput placeholder="Search..." />
-						<InputGroupAddon>
-							<Search />
-						</InputGroupAddon>
-					</InputGroup>
+					<SearchDropdown />
 				</div>
 				<div className="hidden md:flex flex-col items-center">
 					<Link
