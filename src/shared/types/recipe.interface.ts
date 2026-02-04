@@ -20,7 +20,8 @@ export interface IRecipesState {
   loading: boolean;
   error: string | null;
   hasMore: boolean;
-  fetchRecipes: (limit?: number, skip?: number) => Promise<void>;
+  resetRecipes: () => void;
+  fetchRecipes: (params?: { limit?: number; skip?: number; mealType?: string; sortBy?: string; order?: 'asc' | 'desc' }) => Promise<void>;
   fetchRecipeById: (id: number) => Promise<IRecipe>;
   searchRecipes: (query: string) => Promise<IRecipe[]>;
 }

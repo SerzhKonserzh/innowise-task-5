@@ -7,27 +7,59 @@ export const useRecipesStore = create<IRecipesState>((set, get) => ({
   loading: false,
   error: null,
   hasMore: true,
-  fetchRecipes: async (limit: number = 12, skip: number = 0) => {
+  
+  resetRecipes: () => {
+    set({ recipes: [], hasMore: true });
+  },
+  
+  fetchRecipes: async (params: { 
+    limit?: number; 
+    skip?: number; 
+    mealType?: string; 
+    sortBy?: string; 
+    order?: 'asc' | 'desc' 
+  } = {}) => {
     const { recipes: existingRecipes, hasMore } = get();
+    const { limit = 12, skip = 0, mealType, sortBy, order } = params;
     
-    if (!hasMore && skip > 0) return;
+    const isInitialLoad = skip === 0;
+    
+    if (!hasMore && !isInitialLoad) {
+      set({ loading: false });
+      return;
+    }
     
     set({ loading: true, error: null });
+    
     try {
-      const response = await fetchRecipesService(limit, skip);
+      const response = await fetchRecipesService({ limit, skip, mealType, sortBy, order });
       const newRecipes = response.recipes;
       
-      const updatedRecipes = skip === 0 ? newRecipes : [...existingRecipes, ...newRecipes];
+      let updatedRecipes: IRecipe[];
+      
+      if (isInitialLoad) {
+        updatedRecipes = newRecipes;
+      } else {
+        const uniqueNewRecipes = newRecipes.filter(
+          (newRecipe) => !existingRecipes.some((existingRecipe) => existingRecipe.id === newRecipe.id)
+        );
+        updatedRecipes = [...existingRecipes, ...uniqueNewRecipes];
+      }
       
       set({
         recipes: updatedRecipes,
         loading: false,
-        hasMore: updatedRecipes.length < response.total
+        hasMore: response.recipes.length === limit 
       });
     } catch (error) {
-      set({ error: (error as Error).message, loading: false });
+      set({ 
+        error: (error as Error).message, 
+        loading: false,
+        hasMore: false 
+      });
     }
   },
+  
   fetchRecipeById: async (id: number) => {
     try {
       const recipe = await fetchRecipeByIdService(id);
@@ -36,6 +68,7 @@ export const useRecipesStore = create<IRecipesState>((set, get) => ({
       throw new Error((error as Error).message);
     }
   },
+  
   searchRecipes: async (query: string) => {
     try {
       const recipes = await searchRecipesService(query);
