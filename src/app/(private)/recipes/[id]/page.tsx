@@ -12,9 +12,11 @@ import {
 	Timer,
 	Utensils,
 	ChevronLeft,
-	Check
+	Check,
+	Heart
 } from 'lucide-react';
 import { useRecipesStore } from '@/src/store/recipes.store';
+import { useFavoritesStore } from '@/src/store/favorites.store';
 import type { IRecipe } from '@/src/shared/types/recipe.interface';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
@@ -23,6 +25,7 @@ export default function RecipeDetailPage() {
 	const router = useRouter();
 	const params = useParams<{ id: string }>();
 	const { recipes, fetchRecipeById } = useRecipesStore();
+	const { addFavorite, removeFavorite, isFavorite } = useFavoritesStore();
 	const [recipe, setRecipe] = useState<IRecipe | null>(null);
 	const [loading, setLoading] = useState(true);
 
@@ -51,6 +54,16 @@ export default function RecipeDetailPage() {
 
 		fetchRecipe();
 	}, [params.id, recipes, fetchRecipeById]);
+
+	const handleFavoriteToggle = () => {
+		if (!recipe) return;
+
+		if (isFavorite(recipe.id)) {
+			removeFavorite(recipe.id);
+		} else {
+			addFavorite(recipe);
+		}
+	};
 
 	if (loading) {
 		return <div className="container mx-auto p-4">Loading...</div>;
@@ -92,7 +105,9 @@ export default function RecipeDetailPage() {
 
 					<div className="flex items-center gap-2 mb-4">
 						<Star className="h-5 w-5 fill-yellow-500 text-yellow-500" />
-						<span className="text-muted-foreground">{recipe.rating} ({recipe.reviewCount} reviews)</span>
+						<span className="text-muted-foreground">
+							{recipe.rating} ({recipe.reviewCount} reviews)
+						</span>
 					</div>
 
 					<div className="flex items-center gap-6 text-muted-foreground">
@@ -100,9 +115,22 @@ export default function RecipeDetailPage() {
 							<Utensils className="h-5 w-5" />
 							<span>{recipe.cuisine}</span>
 						</div>
-						<Button variant="outline" className="">
-							<Star className="h-5 w-5" />
-							Save to Favorites
+						<Button
+							variant="outline"
+							className=""
+							onClick={handleFavoriteToggle}
+						>
+							{!isFavorite(recipe.id) ? (
+								<>
+									<Heart className="h-5 w-5" />
+									Save to favorites
+								</>
+							) : (
+								<>
+									<Heart className="h-5 w-5 text-red-600 fill-red-600 transition" />
+									Remove from favorites
+								</>
+							)}
 						</Button>
 					</div>
 				</div>

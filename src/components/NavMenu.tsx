@@ -5,14 +5,15 @@ import { PAGES } from '../config/pages.config';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
-import { Menu } from 'lucide-react';
+import { Heart, Menu } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { NavMenuItem } from './NavMenuItem';
 import { CartIcon } from '@/components/ui/cart';
 
 const navItems = [
-	{ name: 'Main', href: PAGES.HOME, icon: <CartIcon className='flex justify-center'/> },
-	{ name: 'About', href: PAGES.ABOUT, icon: <CartIcon className='flex justify-center'/> }
+	{ name: 'Main', href: PAGES.HOME, icon: <CartIcon className='flex justify-center w-7 h-7'/> },
+	{ name: 'About', href: PAGES.ABOUT, icon: <CartIcon className='flex justify-center w-7 h-7'/> },
+	{ name: 'Favorites', href: PAGES.FAVORITES, icon: <Heart className='flex justify-center w-7 h-7'/> }
 ];
 
 export function NavMenu() {
@@ -21,7 +22,7 @@ export function NavMenu() {
 
 	return (
 		<>
-			<nav className="hidden md:flex items-center gap-6">
+			<nav className="hidden md:flex items-center gap-4">
 				{navItems.map(item => (
 					<NavMenuItem key={item.name} href={item.href} icon={item.icon} name={item.name} isActive={pathname === item.href ? true : false}/>
 				))}
