@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { PAGES } from '../config/pages.config';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
@@ -9,11 +8,13 @@ import { Heart, Menu } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { NavMenuItem } from './NavMenuItem';
 import { CartIcon } from '@/components/ui/cart';
+import { HeartIcon } from '@/components/ui/heart';
+import { CircleHelpIcon } from '@/components/ui/circle-help';
 
 const navItems = [
 	{ name: 'Main', href: PAGES.HOME, icon: <CartIcon className='flex justify-center w-7 h-7'/> },
-	{ name: 'About', href: PAGES.ABOUT, icon: <CartIcon className='flex justify-center w-7 h-7'/> },
-	{ name: 'Favorites', href: PAGES.FAVORITES, icon: <Heart className='flex justify-center w-7 h-7'/> }
+	{ name: 'About', href: PAGES.ABOUT, icon: <CircleHelpIcon className='flex justify-center w-7 h-7'/> },
+	{ name: 'Favorites', href: PAGES.FAVORITES, icon: <HeartIcon className='flex justify-center w-7 h-7'/> }
 ];
 
 export function NavMenu() {
