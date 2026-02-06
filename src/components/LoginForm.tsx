@@ -23,8 +23,8 @@ export function LoginForm({ onLoginSuccess }: LoginFormProps) {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
-      username: 'kminchelle',
-      password: '0lelplR',
+      username: '',
+      password: '',
     },
   });
   
@@ -74,6 +74,7 @@ export function LoginForm({ onLoginSuccess }: LoginFormProps) {
             <Input
               id="username"
               type="text"
+              placeholder='Enter username'
               {...register('username')}
             />
             {errors.username && (
@@ -87,6 +88,7 @@ export function LoginForm({ onLoginSuccess }: LoginFormProps) {
             <Input
               id="password"
               type="password"
+              placeholder='Enter password'
               {...register('password')}
             />
             {errors.password && (
