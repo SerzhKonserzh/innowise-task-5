@@ -1,0 +1,85 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LoginForm > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm w-full max-w-md mx-2"
+    data-slot="card"
+  >
+    <div
+      class="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-2 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6"
+      data-slot="card-header"
+    >
+      <div
+        class="text-2xl font-bold text-center"
+        data-slot="card-title"
+      >
+        Login
+      </div>
+      <div
+        class="text-muted-foreground text-sm text-center"
+        data-slot="card-description"
+      >
+        Enter your credentials to access your account
+      </div>
+    </div>
+    <form
+      class="flex flex-col gap-9"
+    >
+      <div
+        class="px-6 flex flex-col gap-9"
+        data-slot="card-content"
+      >
+        <div
+          class="relative"
+        >
+          <label
+            class="text-sm font-medium"
+            for="username"
+          >
+            Username
+          </label>
+          <input
+            class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+            data-slot="input"
+            id="username"
+            placeholder="Enter username"
+            type="text"
+          />
+        </div>
+        <div
+          class="relative"
+        >
+          <label
+            class="text-sm font-medium"
+            for="password"
+          >
+            Password
+          </label>
+          <input
+            class="file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive"
+            data-slot="input"
+            id="password"
+            placeholder="Enter password"
+            type="password"
+          />
+        </div>
+      </div>
+      <div
+        class="flex items-center px-6 [.border-t]:pt-6"
+        data-slot="card-footer"
+      >
+        <button
+          class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all hover: cursor-pointer disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive bg-primary text-primary-foreground hover:bg-primary/90 h-9 px-4 py-2 has-[>svg]:px-3 w-full"
+          data-size="default"
+          data-slot="button"
+          data-variant="default"
+          type="submit"
+        >
+          Sign In
+        </button>
+      </div>
+    </form>
+  </div>
+</DocumentFragment>
+`;
