@@ -1,4 +1,4 @@
-import { API_URL } from '../constants';
+import { api } from './api';
 
 export interface IAuthResponse {
   id: number;
@@ -19,42 +19,18 @@ export interface ILoginCredentials {
 
 export const loginService = async (credentials: ILoginCredentials): Promise<IAuthResponse> => {
   try {
-    const response = await fetch(`${API_URL}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(credentials),
-    });
-
-    if (!response.ok) {
-      throw new Error('Invalid credentials');
-    }
-
-    const data: IAuthResponse = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(`Failed to login: ${(error as Error).message}`);
+    const response = await api.post<IAuthResponse>('/auth/login', credentials);
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Invalid credentials');
   }
 };
 
 export const refreshSessionService = async (refreshToken: string): Promise<IAuthResponse> => {
   try {
-    const response = await fetch(`${API_URL}/auth/refresh`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ refreshToken }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to refresh session');
-    }
-
-    const data: IAuthResponse = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(`Failed to refresh session: ${(error as Error).message}`);
+    const response = await api.post<IAuthResponse>('/auth/refresh', { refreshToken });
+    return response.data;
+  } catch (error: any) {
+    throw new Error(error.response?.data?.message || 'Failed to refresh session');
   }
 };

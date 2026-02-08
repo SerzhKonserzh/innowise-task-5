@@ -1,4 +1,4 @@
-import { API_URL } from '../constants';
+import { api } from './api';
 import type { IRecipe } from '../shared/types/recipe.interface';
 
 export interface IRecipesResponse {
@@ -25,46 +25,40 @@ export const fetchRecipesService = async (
 
 		let url: string;
 		if (mealType) {
-			url = `${API_URL}/recipes/meal-type/${mealType}`;
+			url = `/recipes/meal-type/${mealType}`;
 		} else {
-			url = `${API_URL}/recipes`;
+			url = '/recipes';
 		}
 
-		const urlParams = new URLSearchParams();
-		urlParams.append('limit', limit.toString());
-		urlParams.append('skip', skip.toString());
+		const paramsObj: Record<string, any> = {
+			limit,
+			skip
+		};
 
 		if (sortBy) {
-			urlParams.append('sortBy', sortBy);
+			paramsObj.sortBy = sortBy;
 		}
 
 		if (order) {
-			urlParams.append('order', order);
+			paramsObj.order = order;
 		}
 
-		const fullUrl = `${url}?${urlParams.toString()}`;
-		const response = await fetch(fullUrl, {
-			next: { revalidate: 3600 }
-		});
-		const data: IRecipesResponse = await response.json();
-		return data;
-	} catch (error) {
-		throw new Error(`Failed to fetch recipes: ${(error as Error).message}`);
+		const response = await api.get<IRecipesResponse>(url, { params: paramsObj });
+		return response.data;
+	} catch (error: any) {
+		throw new Error(error.response?.data?.message || `Failed to fetch recipes: ${error.message}`);
 	}
 };
 
 export const fetchRecipeByIdService = async (id: number): Promise<IRecipe> => {
 	try {
-		const response = await fetch(`${API_URL}/recipes/${id}`, {
-			next: { revalidate: 3600 }
-		});
-		if (!response.ok) {
+		const response = await api.get<IRecipe>(`/recipes/${id}`);
+		return response.data;
+	} catch (error: any) {
+		if (error.response?.status === 404) {
 			throw new Error(`Recipe with id ${id} not found`);
 		}
-		const data: IRecipe = await response.json();
-		return data;
-	} catch (error) {
-		throw new Error(`Failed to fetch recipe: ${(error as Error).message}`);
+		throw new Error(error.response?.data?.message || `Failed to fetch recipe: ${error.message}`);
 	}
 };
 
@@ -72,15 +66,11 @@ export const searchRecipesService = async (
 	query: string
 ): Promise<IRecipe[]> => {
 	try {
-		const response = await fetch(
-			`${API_URL}/recipes/search?q=${encodeURIComponent(query)}`,
-			{
-				cache: 'no-store'
-			}
-		);
-		const data: IRecipesResponse = await response.json();
-		return data.recipes;
-	} catch (error) {
-		throw new Error(`Failed to search recipes: ${(error as Error).message}`);
+		const response = await api.get<IRecipesResponse>('/recipes/search', {
+			params: { q: query }
+		});
+		return response.data.recipes;
+	} catch (error: any) {
+		throw new Error(error.response?.data?.message || `Failed to search recipes: ${error.message}`);
 	}
 };
