@@ -2,6 +2,9 @@
 
 A modern recipe browsing application built with Next.js 16, featuring user authentication, recipe search, filtering, and favorites functionality.
 
+## Deploy (Netlify)
+https://rainbow-cajeta-ef82d1.netlify.app/
+
 ## Features
 
 - User authentication system with login/logout
