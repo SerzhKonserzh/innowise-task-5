@@ -1,19 +1,11 @@
-'use client';
-
-import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/src/store/auth.store';
 import { LoginForm } from '@/src/components/LoginForm';
-import { useEffect } from 'react';
+import type { Metadata } from 'next';
+
+export const meta: Metadata = {
+  title: 'Login',
+};
 
 export default function LoginPage() {
-  const router = useRouter();
-  const { isAuthenticated } = useAuthStore();
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.push('/');
-    }
-  }, [isAuthenticated, router]);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">

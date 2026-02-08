@@ -21,7 +21,7 @@ export const fetchRecipesService = async (
 	params: IFetchRecipesParams = {}
 ): Promise<IRecipesResponse> => {
 	try {
-		const { limit = 12, skip = 0, tag, mealType, sortBy, order } = params;
+		const { limit = 12, skip = 0, mealType, sortBy, order } = params;
 
 		let url: string;
 		if (mealType) {
@@ -43,7 +43,9 @@ export const fetchRecipesService = async (
 		}
 
 		const fullUrl = `${url}?${urlParams.toString()}`;
-		const response = await fetch(fullUrl);
+		const response = await fetch(fullUrl, {
+			next: { revalidate: 3600 }
+		});
 		const data: IRecipesResponse = await response.json();
 		return data;
 	} catch (error) {
@@ -53,7 +55,9 @@ export const fetchRecipesService = async (
 
 export const fetchRecipeByIdService = async (id: number): Promise<IRecipe> => {
 	try {
-		const response = await fetch(`${API_URL}/recipes/${id}`);
+		const response = await fetch(`${API_URL}/recipes/${id}`, {
+			next: { revalidate: 3600 }
+		});
 		if (!response.ok) {
 			throw new Error(`Recipe with id ${id} not found`);
 		}
@@ -69,21 +73,14 @@ export const searchRecipesService = async (
 ): Promise<IRecipe[]> => {
 	try {
 		const response = await fetch(
-			`${API_URL}/recipes/search?q=${encodeURIComponent(query)}`
+			`${API_URL}/recipes/search?q=${encodeURIComponent(query)}`,
+			{
+				cache: 'no-store'
+			}
 		);
 		const data: IRecipesResponse = await response.json();
 		return data.recipes;
 	} catch (error) {
 		throw new Error(`Failed to search recipes: ${(error as Error).message}`);
-	}
-};
-
-export const fetchRecipeTagsService = async (): Promise<string[]> => {
-	try {
-		const response = await fetch(`${API_URL}/recipes/tags`);
-		const data: string[] = await response.json();
-		return data;
-	} catch (error) {
-		throw new Error(`Failed to fetch recipe tags: ${(error as Error).message}`);
 	}
 };

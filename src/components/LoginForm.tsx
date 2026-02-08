@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -11,11 +11,7 @@ import { useAuthStore } from '@/src/store/auth.store';
 import { loginFormSchema } from './LoginForm.schema';
 import type { LoginFormValues } from './LoginForm.schema';
 
-interface LoginFormProps {
-  onLoginSuccess?: () => void;
-}
-
-export function LoginForm({ onLoginSuccess }: LoginFormProps) {
+export function LoginForm() {
   const {
     register,
     handleSubmit,
@@ -30,32 +26,18 @@ export function LoginForm({ onLoginSuccess }: LoginFormProps) {
   
   const [error, setError] = useState('');
   const router = useRouter();
-  const { login, isAuthenticated } = useAuthStore();
+  const { login } = useAuthStore();
 
   const onSubmit = async (data: LoginFormValues) => {
     setError('');
     
     try {
       await login(data);
-      
-      //timeout to synchronize cookie
-      await new Promise(resolve => setTimeout(resolve, 100));
-      
-      if (onLoginSuccess) {
-        onLoginSuccess();
-      } else {
-        router.push('/');
-      }
+      router.push('/');
     } catch (err) {
       setError((err as Error).message);
     }
   };
-
-  useEffect(() => {
-    if (isAuthenticated && !onLoginSuccess) {
-      router.push('/');
-    }
-  }, [isAuthenticated, router, onLoginSuccess]);
 
   return (
     <Card className="w-full max-w-md mx-2">
