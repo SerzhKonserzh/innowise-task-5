@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LoginPage > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="flex items-center justify-center min-h-screen bg-gray-50"
+  >
+    <div
+      data-testid="login-form"
+    >
+      LoginForm Component
+    </div>
+  </div>
+</DocumentFragment>
+`;
