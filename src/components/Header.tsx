@@ -4,12 +4,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { NavMenu } from './NavMenu';
 import { CookingPotIcon } from '@/components/ui/cooking-pot';
-import { PAGES } from '../config/pages.config';
+
 import { UserIcon } from '@/components/ui/user';
 import { SearchDropdown } from './SearchDropdown';
 import { useAuthStore } from '@/src/store/auth.store';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
+import { PAGES } from '../constants';
 
 export function Header() {
 	const { user, logout } = useAuthStore();
@@ -17,7 +18,7 @@ export function Header() {
 
 	const handleLogout = () => {
 		logout();
-		router.push(PAGES.HOME);
+		router.push(PAGES.LOGIN);
 	};
 
 	return (

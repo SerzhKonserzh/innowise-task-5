@@ -1,6 +1,6 @@
 'use client';
 
-import { PAGES } from '../config/pages.config';
+
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
@@ -10,6 +10,7 @@ import { NavMenuItem } from './NavMenuItem';
 import { CartIcon } from '@/components/ui/cart';
 import { HeartIcon } from '@/components/ui/heart';
 import { CircleHelpIcon } from '@/components/ui/circle-help';
+import { PAGES } from '../constants';
 
 const navItems = [
 	{ name: 'Main', href: PAGES.HOME, icon: <CartIcon className='flex justify-center w-7 h-7'/> },
